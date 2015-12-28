@@ -32,11 +32,11 @@ int main()
     generationVecteurAleatoire(vecteur, nombreElements);
 
     // ### TRI
-    start = clock();
+    start = clock(); //Permet de chronometrer l algorithme de tri
 
     //triSelection(vecteur, nombreElements);
     //triInsertion(vecteur, nombreElements);
-    triBulles(vecteur, nombreElements);
+    //triBulles(vecteur, nombreElements);
 
     end = clock();
     // ### TRI FAIT
@@ -48,7 +48,6 @@ int main()
         printf("%i\r\n", vecteur[indice]);
     */
 
-    end = clock();
     time_used = ( (double) (end - start) );
     printf("Temps d execution : %f s\r\n", time_used / CLOCKS_PER_SEC);
 
