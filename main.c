@@ -16,40 +16,38 @@ unsigned int indicePlusPetit(int* liste, const unsigned int nombreElt, const uns
 void triInsertion(int* liste, const unsigned int nombreElt);
 void echangerElements(int* liste, const unsigned int indice1, const unsigned int indice2);
 
+void triBulles(int* liste, const unsigned int nombreElt);
 
-//          REALISATIONS
+
+
+//          DEFINITIONS
 int main()
 {
     clock_t start, end;
     double time_used;
 
-
-    int nombreElements = 10000;
+    int nombreElements = 10;
 
     int * vecteur = malloc(sizeof(int) * nombreElements);
     generationVecteurAleatoire(vecteur, nombreElements);
-
-    /*
-    unsigned int indice = 0;
-    for (indice=0; indice<nombreElements; indice++)
-        printf("%i\r\n", vecteur[indice]);
-
-    printf(" \r\n \r\n");
-     */
 
     // ### TRI
     start = clock();
 
     //triSelection(vecteur, nombreElements);
     //triInsertion(vecteur, nombreElements);
+    triBulles(vecteur, nombreElements);
 
     end = clock();
     // ### TRI FAIT
 
-    /*
+
+    /* VERIFICATION VISUELLE
+    int indice;
     for (indice=0; indice<nombreElements; indice++)
         printf("%i\r\n", vecteur[indice]);
     */
+
     end = clock();
     time_used = ( (double) (end - start) );
     printf("Temps d execution : %f s\r\n", time_used / CLOCKS_PER_SEC);
@@ -79,6 +77,11 @@ void generationVecteurAleatoire(int* vectActuel, const int nombreElt)
 
 
 // ################ TRI PAR SELECTION ################
+/*
+ * Complexite temporelle : O(n^2)
+ * Complexite memoire :    O(1)
+ */
+
 unsigned int indicePlusPetit(int* liste, const unsigned int nombreElt, const unsigned int indiceDebut)
 //Retourne la premiere occurrence du plus petit element de la liste passee en parametre.
 {
@@ -126,6 +129,11 @@ void triSelection(int* vectActuel, const int nombreElt)
 
 
 // ################ TRI PAR INSERTION ################
+/*
+ * Complexite temporelle : O(n^2)
+ * Complexite memoire :    O(1)
+ */
+
 void echangerElements(int* liste, const unsigned int indice1, const unsigned int indice2)
 {
     int tampon = liste[indice1];
@@ -155,6 +163,35 @@ void triInsertion(int* liste, const unsigned int nombreElt)
 
 
 // ################ TRI A BULLES ################
+/*
+ * Complexite temporelle : O(n^2)
+ * Complexite memoire :    O(1)
+ */
+
+void triBulles(int* liste, const unsigned int nombreElt)
+
+{
+    unsigned int i = 0;
+    unsigned int j = 0;
+
+    for (i=nombreElt-1; i>1; i--)
+    {
+        for( j=0; j < i; j++)
+        {
+            if (liste[j] > liste[j+1])
+            {
+                echangerElements(liste, j, j+1);
+            }
+        }
+    }
+}
+//  ################################
+
+// ################ TRI RAPIDE ################
+/*
+ * Complexite temporelle (moyenne) : O(n*log(n))
+ * Complexite memoire :    O(n)
+ */
 
 
 //  ################################
