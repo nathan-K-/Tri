@@ -1,6 +1,7 @@
 /*
  * Created by Nathan KIENLEN
  * 28.12.2015
+ * Teste sous GCC 4.8.4 et sous Debian
  */
 
 #include <stdlib.h>
