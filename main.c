@@ -20,7 +20,6 @@ void echangerElements(int* liste, const unsigned int indice1, const unsigned int
 void triBulles(int* liste, const unsigned int nombreElt);
 
 void triRapide(int* liste, const unsigned int debut, const unsigned int fin);
-// TODO : A debugger, ne fonctionne pas tout le temps ...
 int randomInterval(const int debut, const int fin);
 
 
@@ -246,10 +245,11 @@ unsigned int partition(int* liste, const unsigned int debut, const unsigned int 
 void triRapide(int* liste, const unsigned int debut, const unsigned int fin)
 {
     unsigned int position = 0;
-    if (debut < fin-1)
+    if (debut < fin)
     {
         position = partition(liste, debut, fin);
-        triRapide(liste, debut, position-1);
+        if (position != 0)
+            triRapide(liste, debut, position-1);
         triRapide(liste, position+1, fin);
     }
 }
