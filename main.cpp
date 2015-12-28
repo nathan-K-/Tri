@@ -1,26 +1,31 @@
+/*
+ * Created by Nathan KIENLEN
+ * 28.12.2015
+ */
+
 #include <iostream>
 #include <vector>
 #include <random>
 #include <boost/timer.hpp>
 using namespace std;
 
-void vecteurAleatoire(vector<int> vectActuel, long int nombreElt);
+void generationVecteurAleatoire(vector<int> vectActuel, long int nombreElt);
 
 int main()
 {
-    boost::timer tps;
-    cout << "Hello, World!" << endl;
+    boost::timer tps; //On chronometre l'application
 
-    int nombreElements = 100000000;
+    int nombreElements = 1000;
+
     vector<int> vecteur;
-    vecteurAleatoire(vecteur, nombreElements),
-
+    generationVecteurAleatoire(vecteur, nombreElements),
 
     cout << "Temps d'execution : " << tps.elapsed() << " s" << endl;
     return 0;
 }
 
-void vecteurAleatoire(vector<int> vectActuel, long int nombreElt)
+
+void generationVecteurAleatoire(vector<int> vectActuel, long int nombreElt)
 {
     unsigned int element;
     long int index(0);
