@@ -5,12 +5,11 @@
 
 #include <stdlib.h>
 #include "stdio.h"
-#include "time.h"
 
 //          DECLARATIONS
 void generationVecteurAleatoire(int* vectActuel, const int nombreElt);
 
-void triSelection(int* vectActuel, const int nombreElt);
+void triSelection(int* vectActuel, const unsigned int nombreElt);
 unsigned int indicePlusPetit(int* liste, const unsigned int nombreElt, const unsigned int indiceDebut);
 
 void triInsertion(int* liste, const unsigned int nombreElt);
@@ -65,8 +64,7 @@ void generationVecteurAleatoire(int* vectActuel, const int nombreElt)
     for (index; index < nombreElt; index++)
         vectActuel[index] = 0;
 
-    srand (time (NULL)); // pour avoir un "random" different d un execution a l autre ...
-    unsigned int element;
+    srand ( (unsigned int) time (NULL) ); // pour avoir un "random" different d un execution a l autre ...
     for (index=0; index<nombreElt; index++)
     {
         vectActuel[index] = rand() % 10000; //On limite l amplitude des valeurs
@@ -88,7 +86,7 @@ unsigned int indicePlusPetit(int* liste, const unsigned int nombreElt, const uns
         return 0;
 
     if (indiceDebut > nombreElt)
-        return -1; //erreur
+        return -1; //erreur -> on fait planter le programme
 
     int ppe = liste[indiceDebut]; // plus petit element (actuel)
     unsigned int ipp = indiceDebut; // indice du ppe
@@ -107,19 +105,18 @@ unsigned int indicePlusPetit(int* liste, const unsigned int nombreElt, const uns
 }
 
 
-void triSelection(int* vectActuel, const int nombreElt)
+void triSelection(int* vectActuel, const unsigned int nombreElt)
 {
-    unsigned int indice1 = 0;
-    unsigned int indice2 = 0;
+    unsigned int indice = 0;
     unsigned int ipp = 0;
     int tampon; //sert pour echanger deux valeurs
 
-    for (indice1; indice1<nombreElt; indice1++) //Permet de creer virtuellement des sous tableaux
+    for ( indice ; indice < nombreElt; indice++) //Permet de creer virtuellement des sous tableaux
     {
-        ipp = indicePlusPetit(vectActuel, nombreElt, indice1);
+        ipp = indicePlusPetit(vectActuel, nombreElt, indice);
         tampon = vectActuel[ipp];
-        vectActuel[ipp] = vectActuel[indice1];
-        vectActuel[indice1] = tampon;
+        vectActuel[ipp] = vectActuel[indice];
+        vectActuel[indice] = tampon;
     }
 }
 
