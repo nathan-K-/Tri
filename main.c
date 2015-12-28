@@ -20,7 +20,7 @@ void echangerElements(int* liste, const unsigned int indice1, const unsigned int
 void triBulles(int* liste, const unsigned int nombreElt);
 
 void triRapide(int* liste, const unsigned int debut, const unsigned int fin);
-// TODO : A debugger
+// TODO : A debugger, ne fonctionne pas tout le temps ...
 int randomInterval(const int debut, const int fin);
 
 
@@ -41,7 +41,7 @@ int main()
     //triSelection(vecteur, nombreElements);
     //triInsertion(vecteur, nombreElements);
     //triBulles(vecteur, nombreElements);
-    triRapide(vecteur, 0, nombreElements);
+    triRapide(vecteur, 0, nombreElements-1);
 
     end = clock();
     // ### TRI FAIT
@@ -226,23 +226,27 @@ unsigned int partition(int* liste, const unsigned int debut, const unsigned int 
 //On choisit un pivot aleatoire, et on permute les elements du tableau de maniere a ce que
 // les elements plus grands que le pivot soient en fin de liste
 {
-    echangerElements(liste, debut, (unsigned int) randomInterval(debut, fin) );
+    //echangerElements(liste, debut, (unsigned int) randomInterval(debut, fin) );
 
-    unsigned int pivot = debut;
-    unsigned int index = 0;
-    for (index=debut+1; index<fin; index++)
+    int pivot = liste[fin];
+    unsigned int i = debut;
+    unsigned int index;
+    for (index=debut; index<fin; index++)
     {
-        echangerElements(liste, ++pivot, index );
+        if (liste[index] < pivot)
+        {
+            echangerElements(liste, i++, index );
+        }
     }
-    echangerElements(liste, pivot, debut);
-    return pivot;
+    echangerElements(liste, i, fin);
+    return i;
 }
 
 
 void triRapide(int* liste, const unsigned int debut, const unsigned int fin)
 {
     unsigned int position = 0;
-    if (debut < fin)
+    if (debut < fin-1)
     {
         position = partition(liste, debut, fin);
         triRapide(liste, debut, position-1);
