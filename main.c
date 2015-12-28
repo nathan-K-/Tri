@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include "stdio.h"
+#include "time.h"
 
 //          DECLARATIONS
 void generationVecteurAleatoire(int* vectActuel, const int nombreElt);
@@ -18,6 +19,9 @@ void echangerElements(int* liste, const unsigned int indice1, const unsigned int
 
 void triBulles(int* liste, const unsigned int nombreElt);
 
+void triRapide(int* liste, const unsigned int debut, const unsigned int fin);
+// TODO : A debugger
+int randomInterval(const int debut, const int fin);
 
 
 //          DEFINITIONS
@@ -26,7 +30,7 @@ int main()
     clock_t start, end;
     double time_used;
 
-    int nombreElements = 10;
+    const unsigned int nombreElements = 10;
 
     int * vecteur = malloc(sizeof(int) * nombreElements);
     generationVecteurAleatoire(vecteur, nombreElements);
@@ -37,16 +41,17 @@ int main()
     //triSelection(vecteur, nombreElements);
     //triInsertion(vecteur, nombreElements);
     //triBulles(vecteur, nombreElements);
+    triRapide(vecteur, 0, nombreElements);
 
     end = clock();
     // ### TRI FAIT
 
 
-    /* VERIFICATION VISUELLE
+    /* VERIFICATION VISUELLE  */
     int indice;
     for (indice=0; indice<nombreElements; indice++)
         printf("%i\r\n", vecteur[indice]);
-    */
+
 
     time_used = ( (double) (end - start) );
     printf("Temps d execution : %f s\r\n", time_used / CLOCKS_PER_SEC);
@@ -190,5 +195,59 @@ void triBulles(int* liste, const unsigned int nombreElt)
  * Complexite memoire :    O(n)
  */
 
+/*      PLUS UNIFORME, MAIS TRES LENT
+int randomInterval(const int debut, const int fin, const unsigned int nombreValeurs)
+// On boucle pour avoir la distribution la plus uniforme possible
+{
+    int retour = 0; //return code
+    int randInt;
+    unsigned int compteur = 0;
+    do {
+        randInt = rand();
+        if (randInt <= fin && randInt >= debut)
+        {
+            compteur++;
+            retour += randInt;
+        }
+    }
+    while (compteur < nombreValeurs);
+
+    return (int) retour / compteur;
+} */
+
+int randomInterval(const int debut, const int fin)
+{
+    double scaled = (double)rand()/RAND_MAX;
+
+    return ((int) ((fin - debut +1)*scaled + debut));
+};
+
+unsigned int partition(int* liste, const unsigned int debut, const unsigned int fin)
+//On choisit un pivot aleatoire, et on permute les elements du tableau de maniere a ce que
+// les elements plus grands que le pivot soient en fin de liste
+{
+    echangerElements(liste, debut, (unsigned int) randomInterval(debut, fin) );
+
+    unsigned int pivot = debut;
+    unsigned int index = 0;
+    for (index=debut+1; index<fin; index++)
+    {
+        echangerElements(liste, ++pivot, index );
+    }
+    echangerElements(liste, pivot, debut);
+    return pivot;
+}
+
+
+void triRapide(int* liste, const unsigned int debut, const unsigned int fin)
+{
+    unsigned int position = 0;
+    if (debut < fin)
+    {
+        position = partition(liste, debut, fin);
+        triRapide(liste, debut, position-1);
+        triRapide(liste, position+1, fin);
+    }
+}
 
 //  ################################
